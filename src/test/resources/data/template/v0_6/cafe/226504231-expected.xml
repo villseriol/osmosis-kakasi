@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis %VERSION%">
+  <way id="226504231" version="1" timestamp="2013-06-20T03:59:33Z" uid="685354" user="Makoto Takeichi" changeset="16624673">
+    <nd ref="2353008196"/>
+    <nd ref="2353008197"/>
+    <nd ref="2353008198"/>
+    <nd ref="2353008199"/>
+    <nd ref="2353008200"/>
+    <nd ref="2353008201"/>
+    <nd ref="2353008202"/>
+    <nd ref="2353008203"/>
+    <nd ref="2353008204"/>
+    <nd ref="2353008196"/>
+    <tag k="amenity" v="cafe"/>
+    <tag k="building" v="yes"/>
+    <tag k="name" v="ka a·ga^den"/>
+  </way>
+</osm>

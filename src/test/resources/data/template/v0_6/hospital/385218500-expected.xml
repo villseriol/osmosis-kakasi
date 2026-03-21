@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis %VERSION%">
+  <way id="385218500" version="1" timestamp="2015-12-10T07:47:42Z" uid="2682437" user="地図編集アカウント" changeset="35860366">
+    <nd ref="3885741445"/>
+    <nd ref="3885741440"/>
+    <nd ref="3885741412"/>
+    <nd ref="3885741393"/>
+    <nd ref="3885741394"/>
+    <nd ref="3885741366"/>
+    <nd ref="3885741365"/>
+    <nd ref="3885739427"/>
+    <nd ref="3885739423"/>
+    <nd ref="3885739419"/>
+    <nd ref="3885739424"/>
+    <nd ref="3885739447"/>
+    <nd ref="3885739448"/>
+    <nd ref="3885741401"/>
+    <nd ref="3885741663"/>
+    <nd ref="3885741450"/>
+    <nd ref="3885741445"/>
+    <tag k="amenity" v="hospital"/>
+    <tag k="name" v="tenma byouin"/>
+    <tag k="operator" v="sakae hisashi kai"/>
+  </way>
+</osm>

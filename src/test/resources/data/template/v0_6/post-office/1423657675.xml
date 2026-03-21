@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="Osmosis %VERSION%" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="1423657675" visible="true" version="2" changeset="176423762" timestamp="2025-12-26T07:45:24Z" user="pseek" uid="21586509" lat="34.0675660" lon="134.5478650">
+  <tag k="addr:block_number" v="2"/>
+  <tag k="addr:city" v="徳島市"/>
+  <tag k="addr:housenumber" v="18"/>
+  <tag k="addr:neighbourhood" v="籠屋町"/>
+  <tag k="addr:postcode" v="770-0914"/>
+  <tag k="addr:province" v="徳島県"/>
+  <tag k="amenity" v="post_office"/>
+  <tag k="name" v="徳島かごや町郵便局"/>
+  <tag k="name:en" v="Tokushima Kagoyamachi Post Office"/>
+  <tag k="name:es" v="Oficina de Correos de Tokushima Kagoyamachi"/>
+  <tag k="name:ja" v="徳島かごや町郵便局"/>
+  <tag k="name:ja-Hira" v="とくしま かごやまち ゆうびんきょく"/>
+  <tag k="name:pt" v="Correio de Tokushima Kagoyamachi"/>
+  <tag k="note" v="National-Land Numerical Information (Public Facility) 2006, MLIT Japan"/>
+  <tag k="note:ja" v="国土数値情報（公共施設データ）平成19年　国土交通省"/>
+  <tag k="opening_hours" v="Mo-Fr 09:00-17:00"/>
+  <tag k="operator" v="日本郵便"/>
+  <tag k="operator:en" v="Japan Post"/>
+  <tag k="operator:ja" v="日本郵便"/>
+  <tag k="operator:short" v="郵便局"/>
+  <tag k="operator:short:en" v="JP"/>
+  <tag k="operator:short:ja" v="郵便局"/>
+  <tag k="operator:wikidata" v="Q11509260"/>
+  <tag k="phone" v="+81-88-625-4520"/>
+  <tag k="source" v="KSJ2"/>
+  <tag k="source_ref" v="http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"/>
+ </node>
+</osm>

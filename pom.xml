@@ -34,8 +34,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>17</maven.compiler.release>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -55,10 +55,34 @@
       <scope>compile</scope>
     </dependency>
 
+    <!-- Source: https://mvnrepository.com/artifact/com.ibm.icu/icu4j -->
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>78.3</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.15.0</version>
+      <scope>compile</scope>
+    </dependency>
+
     <!-- Source: https://mvnrepository.com/artifact/org.openstreetmap.osmosis/osmosis-testutil -->
     <dependency>
       <groupId>org.openstreetmap.osmosis</groupId>
       <artifactId>osmosis-testutil</artifactId>
+      <version>0.49.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.openstreetmap.osmosis/osmosis-xml -->
+    <dependency>
+      <groupId>org.openstreetmap.osmosis</groupId>
+      <artifactId>osmosis-xml</artifactId>
       <version>0.49.2</version>
       <scope>test</scope>
     </dependency>
@@ -72,6 +96,15 @@
           <include>copying.txt</include>
         </includes>
         <filtering>true</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>dict/SKK-JISYO.*</include>
+          <include>*.conf</include>
+        </includes>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- List of dictionaries to use -->
+    <dictionary-list>
+        <dictionary alias="station" />
+        <dictionary alias="geo" />
+        <dictionary alias="propernoun" />
+    </dictionary-list>
+    <!-- List of tags to transform -->
+    <tag-list>
+        <tag key="addr:.*" />
+    </tag-list>
+    <!-- List of manual character replacements -->
+    <replacement-list>
+        <replace-with value="">
+            <when-value-is value="" />
+            <when-value-is value="" />
+        </replace-with>
+
+        <replace-with value="·">
+            <when-value-is value="・" />
+            <when-value-is value="･" />
+            <when-value-is value="•" />
+        </replace-with>
+
+        <replace-with value="&lt;">
+            <when-value-is value="〈" />
+        </replace-with>
+
+        <replace-with value="&lt;&lt;">
+            <when-value-is value="《" />
+        </replace-with>
+
+        <replace-with value="&gt;">
+            <when-value-is value="〉" />
+        </replace-with>
+
+        <replace-with value="&gt;&gt;">
+            <when-value-is value="》" />
+        </replace-with>
+
+        <replace-with value="'">
+            <when-value-is value="ʻ" />
+        </replace-with>
+
+        <replace-with value="-">
+            <when-value-is value="–" />
+        </replace-with>
+    </replacement-list>
+
+</configuration>
