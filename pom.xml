@@ -265,6 +265,8 @@
             </executions>
           </plugin>
 
+          <!-- TODO: Move this to the github pipeline -->
+
           <!-- Source: https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -282,10 +284,24 @@
                   <arguments>
                     <argument>--sign</argument>
                     <argument>builder</argument>
-                    <argument>-k</argument>
-                    <argument>${sign.keyname}</argument>
                     <argument>
-                      ${project.build.directory}/${project.artifactId}_${project.version}_all.deb
+                      ${project.build.directory}/${project.artifactId}_${project.version}_all.changes
+                    </argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>verify-deb</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>dpkg-sig</executable>
+                  <arguments>
+                    <argument>--verify</argument>
+                    <argument>
+                      ${project.build.directory}/${project.artifactId}_${project.version}_all.changes
                     </argument>
                   </arguments>
                 </configuration>
