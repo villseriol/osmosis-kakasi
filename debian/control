@@ -1,0 +1,16 @@
+Source: osmosis-kakasi
+Section: utils
+Priority: optional
+Maintainer: ey4180 <ey4180@villseriol.org>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.0
+Homepage: https://osmosis-kakasi.villseriol.org
+Vcs-Browser: https://github.com/villseriol/osmosis-kakasi
+Vcs-Git: https://github.com/villseriol/osmosis-kakasi.git
+Rules-Requires-Root: no
+
+Package: osmosis-kakasi
+Architecture: all
+Depends: default-jre-headless | java17-runtime-headless, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
