@@ -10,6 +10,7 @@
   <version>1.0.0</version>
 
   <name>osmosis-kakasi</name>
+  <description>The kakasi C library as an Osmosis plugin.</description>
   <inceptionYear>2026</inceptionYear>
   <url>https://osmosis-kakasi.villseriol.org/</url>
   <organization>
@@ -31,6 +32,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <url>https://central.sonatype.com/api/v1/publisher</url>
+    </repository>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -107,52 +114,186 @@
         <filtering>false</filtering>
       </resource>
     </resources>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to
-      parent pom) -->
-      <plugins>
-        <!-- clean lifecycle, see
-        https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see
-        https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <!-- site lifecycle, see
-        https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.1</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.4.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.12.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.6.1</version>
+      </plugin>
+    </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>central-build</id>
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.6.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <keyname>${gpg.keyname}</keyname>
+              <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.4.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>debian-build</id>
+      <properties>
+        <sign.keyname>${keyname}</sign.keyname>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.vafer</groupId>
+            <artifactId>jdeb</artifactId>
+            <version>1.14</version>
+            <executions>
+              <execution>
+                <id>build-deb</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>jdeb</goal>
+                </goals>
+                <configuration>
+                  <verbose>true</verbose>
+                  <controlDir>${project.basedir}/debian/control</controlDir>
+                  <deb>${project.build.directory}/${project.artifactId}_${project.version}_all.deb</deb>
+                  <dataSet>
+                    <data>
+                      <src>${project.build.directory}/${project.build.finalName}.jar</src>
+                      <type>file</type>
+                      <mapper>
+                        <type>perm</type>
+                        <prefix>/usr/share/osmosis/plugins</prefix>
+                      </mapper>
+                    </data>
+                    <data>
+                      <src>${project.basedir}/debian/copyright</src>
+                      <type>file</type>
+                      <missingSrc>ignore</missingSrc>
+                    </data>
+                  </dataSet>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Source: https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.6.3</version>
+            <executions>
+              <execution>
+                <id>sign-deb</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>dpkg-sig</executable>
+                  <arguments>
+                    <argument>--sign</argument>
+                    <argument>builder</argument>
+                    <argument>-k</argument>
+                    <argument>${sign.keyname}</argument>
+                    <argument>
+                      ${project.build.directory}/${project.artifactId}_${project.version}_all.deb
+                    </argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
