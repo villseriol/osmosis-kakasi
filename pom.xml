@@ -43,6 +43,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <project.build.debian>${project.artifactId}_${project.version}_all</project.build.debian>
   </properties>
 
   <dependencies>
@@ -253,7 +254,7 @@
                 <configuration>
                   <verbose>true</verbose>
                   <controlDir>${project.basedir}/debian/control</controlDir>
-                  <deb>${project.build.directory}/${project.artifactId}_${project.version}_all.deb</deb>
+                  <deb>${project.build.directory}/${project.build.debian}.deb</deb>
                   <dataSet>
                     <data>
                       <src>${project.build.directory}/${project.build.finalName}.jar</src>
