@@ -27,11 +27,6 @@ jobs:
           FINAL_NAME=$(mvn help:evaluate -Dexpression=project.build.debian -q -DforceStdout)
 
           echo "final_name=$FINAL_NAME" >> $GITHUB_OUTPUT
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v7
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@v6
         with:
