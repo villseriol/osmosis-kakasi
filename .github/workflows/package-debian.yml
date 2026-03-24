@@ -20,7 +20,7 @@ jobs:
       - name: Package
         env:
           MAVEN_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
-        run: mvn clean package -pdebian-build
+        run: mvn clean package -Pdebian-build
       - name: Get Final Artifact Names
         id: get-final-name
         run: |
