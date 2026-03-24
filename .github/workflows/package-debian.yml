@@ -33,12 +33,13 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Sign
-        run: dpkg-sig --sign builder target/${{ steps.get-final-name.outputs.final_name }}.deb
+        run: debsign target/${{ steps.get-final-name.outputs.final_name }}.changes
       - name: Verify
-        run: dpkg-sig --verify target/${{ steps.get-final-name.outputs.final_name }}.deb
+        run: debsign -v target/${{ steps.get-final-name.outputs.final_name }}.changes
       - name: Upload Artifacts
         uses: actions/upload-artifact@v6
         with:
           name: osmosis-kakasi-artifacts
           path: |
             target/${{ steps.get-final-name.outputs.final_name }}.deb
+            target/${{ steps.get-final-name.outputs.final_name }}.changes
