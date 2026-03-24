@@ -237,9 +237,6 @@
   <profiles>
     <profile>
       <id>debian-build</id>
-      <properties>
-        <sign.keyname>${keyname}</sign.keyname>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -272,50 +269,6 @@
                       <missingSrc>ignore</missingSrc>
                     </data>
                   </dataSet>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- TODO: Move this to the github pipeline -->
-
-          <!-- Source: https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.6.3</version>
-            <executions>
-              <execution>
-                <id>sign-deb</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>dpkg-sig</executable>
-                  <arguments>
-                    <argument>--sign</argument>
-                    <argument>builder</argument>
-                    <argument>
-                      ${project.build.directory}/${project.artifactId}_${project.version}_all.changes
-                    </argument>
-                  </arguments>
-                </configuration>
-              </execution>
-              <execution>
-                <id>verify-deb</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>dpkg-sig</executable>
-                  <arguments>
-                    <argument>--verify</argument>
-                    <argument>
-                      ${project.build.directory}/${project.artifactId}_${project.version}_all.changes
-                    </argument>
-                  </arguments>
                 </configuration>
               </execution>
             </executions>
