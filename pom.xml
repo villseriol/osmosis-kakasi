@@ -43,7 +43,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <project.build.debian>${project.artifactId}_${project.version}_all</project.build.debian>
   </properties>
 
   <dependencies>
@@ -234,48 +233,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>debian-build</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.vafer</groupId>
-            <artifactId>jdeb</artifactId>
-            <version>1.14</version>
-            <executions>
-              <execution>
-                <id>build-deb</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>jdeb</goal>
-                </goals>
-                <configuration>
-                  <verbose>true</verbose>
-                  <controlDir>${project.basedir}/debian/control</controlDir>
-                  <deb>${project.build.directory}/${project.build.debian}.deb</deb>
-                  <dataSet>
-                    <data>
-                      <src>${project.build.directory}/${project.build.finalName}.jar</src>
-                      <type>file</type>
-                      <mapper>
-                        <type>perm</type>
-                        <prefix>/usr/share/osmosis/plugins</prefix>
-                      </mapper>
-                    </data>
-                    <data>
-                      <src>${project.basedir}/debian/copyright</src>
-                      <type>file</type>
-                      <missingSrc>ignore</missingSrc>
-                    </data>
-                  </dataSet>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
