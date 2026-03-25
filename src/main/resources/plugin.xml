@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<plugin id="KakasiPlugin" version="${project.version}">
+
+    <requires>
+        <import plugin-id="org.openstreetmap.osmosis.core.plugin.Core" plugin-version="0.49.2"
+            reverse-lookup="false" />
+    </requires>
+    <runtime>
+        <library id="core" path="${project.build.finalName}.jar" type="code"
+            version="${project.version}" />
+    </runtime>
+
+    <extension plugin-id="org.openstreetmap.osmosis.core.plugin.Core"
+        point-id="Task" id="villseriol/kakasi">
+        <parameter id="name" value="kakasi" />
+        <parameter id="class" value="org.villseriol.osmosis.kakasi.KakasiPlugin" />
+    </extension>
+
+    <extension plugin-id="org.openstreetmap.osmosis.core.plugin.Core"
+        point-id="Task" id="villseriol/kakasi-0.6">
+        <parameter id="name" value="kakasi-0.6" />
+        <parameter id="class" value="org.villseriol.osmosis.kakasi.KakasiPlugin" />
+    </extension>
+</plugin>
