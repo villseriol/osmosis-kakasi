@@ -1,7 +1,7 @@
-name: Package Debian
+name: Package Artifacts
 on: [workflow_dispatch]
 jobs:
-  create-debian-package:
+  package-artifacts:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +20,7 @@ jobs:
       - name: Package
         env:
           MAVEN_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
-        run: mvn clean package -Pdebian-build
+        run: mvn clean package
       - name: Get Final Artifact Names
         id: get-final-name
         run: |

@@ -1,0 +1,73 @@
+name: Deploy Package
+on: [workflow_dispatch]
+permissions:
+  contents: write
+jobs:
+  package-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          server-id: central
+          gpg-private-key: ${{secrets.GPG_PRIVATE_KEY}}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Package & Sign
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
+        run: mvn clean verify
+      - name: Get Final Artifact Names
+        id: get-final-name
+        run: |
+          FINAL_NAME=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.build.version -q -DforceStdout)
+
+          echo "final_name=$FINAL_NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: osmosis-kakasi-artifacts
+          path: |
+            target/${{ steps.get-final-name.outputs.final_name }}.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-sources.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-javadoc.jar
+
+  approval:
+    runs-on: ubuntu-latest
+    needs: package-artifacts
+    environment: production
+    steps:
+      - name: Await approval
+        run: echo "Waiting for approval to deploy..."
+
+  deploy-artifacts:
+    runs-on: ubuntu-latest
+    needs: approval
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: osmosis-kakasi-artifacts
+          path: artifacts
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag v${{ needs.package-artifacts.outputs.version }}
+          git push origin v${{ needs.package-artifacts.outputs.version }}
+      - name: Create GitHub Release and upload artifacts
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.package-artifacts.outputs.version }}
+          files: |
+            artifacts/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
