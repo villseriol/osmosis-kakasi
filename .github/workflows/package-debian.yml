@@ -24,7 +24,7 @@ jobs:
       - name: Get Final Artifact Names
         id: get-final-name
         run: |
-          FINAL_NAME=$(mvn help:evaluate -Dexpression=project.build.debian -q -DforceStdout)
+          FINAL_NAME=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout)
 
           echo "final_name=$FINAL_NAME" >> $GITHUB_OUTPUT
       - name: Upload Artifacts
@@ -32,23 +32,6 @@ jobs:
         with:
           name: osmosis-kakasi-artifacts
           path: |
-            target/${{ steps.get-final-name.outputs.final_name }}.deb
-            target/${{ steps.get-final-name.outputs.final_name }}.changes
-
-  sign-debian-packages:
-    runs-on: ubuntu-latest
-    needs: create-debian-package
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v8
-        with:
-          name: osmosis-kakasi-artifacts
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v7
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Sign
-        run: debsign target/${{ needs.create-debian-package.outputs.final_name }}.changes
-      - name: Verify
-        run: debsign -v target/${{ needs.create-debian-package.outputs.final_name }}.changes
+            target/${{ steps.get-final-name.outputs.final_name }}.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-sources.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-javadoc.jar
