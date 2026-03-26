@@ -35,3 +35,4 @@ jobs:
             target/${{ steps.get-final-name.outputs.final_name }}.jar
             target/${{ steps.get-final-name.outputs.final_name }}-sources.jar
             target/${{ steps.get-final-name.outputs.final_name }}-javadoc.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-plugin.zip

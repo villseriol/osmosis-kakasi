@@ -3,11 +3,16 @@ on:
   push:
     tags:
       - '*.*.*'
+  workflow_run:
+    workflows: ['Create Tag']
+    types:
+      - completed
 permissions:
   contents: write
 jobs:
   package-artifacts:
     runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
