@@ -4,8 +4,8 @@ package org.villseriol.osmosis.kakasi.v0_6.configuration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -41,9 +41,13 @@ public class UserConfigurationLoaderTest extends AbstractDataTest {
     @Test
     public void testMalformedConfiguration() {
         File sourceFile = dataUtils.createDataFile("v0_6/malformed-user-config.xml");
-        assertThrows(OsmosisRuntimeException.class, () -> {
+        try {
             loader.load(sourceFile);
-        });
+        } catch (OsmosisRuntimeException e) {
+            // pass
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 

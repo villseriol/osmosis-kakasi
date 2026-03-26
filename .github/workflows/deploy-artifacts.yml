@@ -40,6 +40,7 @@ jobs:
             target/${{ steps.get-final-name.outputs.final_name }}.jar
             target/${{ steps.get-final-name.outputs.final_name }}-sources.jar
             target/${{ steps.get-final-name.outputs.final_name }}-javadoc.jar
+            target/${{ steps.get-final-name.outputs.final_name }}-plugin.zip
 
   create-release:
     runs-on: ubuntu-latest
@@ -56,5 +57,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           files: |
             artifacts/*.jar
+            artifacts/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -9,7 +9,7 @@ import org.openstreetmap.osmosis.core.plugin.PluginLoader;
 import org.villseriol.osmosis.kakasi.v0_6.KakasiTaskFactory;
 
 
-public class KakasiPlugin implements PluginLoader {
+public class KakasiPluginLoader implements PluginLoader {
     @Override
     public Map<String, TaskManagerFactory> loadTaskFactories() {
         KakasiTaskFactory transformFactory = new org.villseriol.osmosis.kakasi.v0_6.KakasiTaskFactory();
