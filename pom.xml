@@ -7,7 +7,7 @@
   <groupId>io.github.villseriol</groupId>
   <artifactId>osmosis-kakasi</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 
   <name>osmosis-kakasi</name>
   <description>The kakasi C library as an Osmosis plugin.</description>
