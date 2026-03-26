@@ -9,7 +9,7 @@ import org.openstreetmap.osmosis.core.Osmosis;
 import org.openstreetmap.osmosis.testutil.AbstractDataTest;
 
 
-public class KakasiPluginTest extends AbstractDataTest {
+public class KakasiPluginLoaderTest extends AbstractDataTest {
     @Test
     public void testHospitalNode() throws IOException {
         File sourceFile = dataUtils.createDataFile("v0_6/hospital/385218500.xml");
@@ -21,6 +21,8 @@ public class KakasiPluginTest extends AbstractDataTest {
         // @formatter:off
         Osmosis.run(new String[] {
             "-q",
+            "-p",
+            "org.villseriol.osmosis.kakasi.KakasiPluginLoader",
             "--read-xml-0.6",
             sourceFile.getPath(),
             "--kakasi-0.6",
@@ -50,6 +52,8 @@ public class KakasiPluginTest extends AbstractDataTest {
         // @formatter:off
         Osmosis.run(new String[] {
             "-q",
+            "-p",
+            "org.villseriol.osmosis.kakasi.KakasiPluginLoader",
             "--read-xml-0.6",
             sourceFile.getPath(),
             "--kakasi-0.6",
@@ -79,6 +83,8 @@ public class KakasiPluginTest extends AbstractDataTest {
         // @formatter:off
         Osmosis.run(new String[] {
             "-q",
+            "-p",
+            "org.villseriol.osmosis.kakasi.KakasiPluginLoader",
             "--read-xml-0.6",
             sourceFile.getPath(),
             "--kakasi-0.6",
@@ -110,6 +116,8 @@ public class KakasiPluginTest extends AbstractDataTest {
         // @formatter:off
         Osmosis.run(new String[] {
             "-q",
+            "-p",
+            "org.villseriol.osmosis.kakasi.KakasiPluginLoader",
             "--read-xml-0.6",
             sourceFile.getPath(),
             "--kakasi-0.6",
