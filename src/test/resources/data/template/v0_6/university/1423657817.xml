@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<osm version="0.6" generator="openstreetmap-cgimap 2.1.0 (1655998 spike-06.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+<osm version="0.6" generator="Osmosis %VERSION%" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
  <node id="1423657817" visible="true" version="1" changeset="9214254" timestamp="2011-09-05T04:47:23Z" user="watao" uid="393606" lat="34.0780320" lon="134.5619560">
   <tag k="amenity" v="university"/>
   <tag k="KSJ2:AdminArea" v="徳島県徳島市"/>
