@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="openstreetmap-cgimap 2.1.0 (1655998 spike-06.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="1423657817" visible="true" version="1" changeset="9214254" timestamp="2011-09-05T04:47:23Z" user="watao" uid="393606" lat="34.0780320" lon="134.5619560">
+  <tag k="amenity" v="university"/>
+  <tag k="KSJ2:AdminArea" v="徳島県徳島市"/>
+  <tag k="KSJ2:ADS" v="南常三島町2-1"/>
+  <tag k="KSJ2:PubFacAdmin" v="国"/>
+  <tag k="name" v="徳島大学（工学部）"/>
+  <tag k="note" v="National-Land Numerical Information (Public Facility) 2006, MLIT Japan"/>
+  <tag k="note:ja" v="国土数値情報（公共施設データ）平成19年　国土交通省"/>
+  <tag k="source" v="KSJ2"/>
+  <tag k="source_ref" v="http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html"/>
+ </node>
+</osm>

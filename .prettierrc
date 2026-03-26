@@ -12,6 +12,15 @@
             "options": {
                 "tabWidth": 2
             }
+        },
+        {
+            "files": [
+                "**/*.md"
+            ],
+            "options": {
+                "proseWrap": "always",
+                "printWidth": 100
+            }
         }
     ]
 }

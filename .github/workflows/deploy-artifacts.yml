@@ -3,10 +3,6 @@ on:
   push:
     tags:
       - '*.*.*'
-  workflow_run:
-    workflows: ['Create Tag']
-    types:
-      - completed
 permissions:
   contents: write
 jobs:
