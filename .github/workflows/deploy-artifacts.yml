@@ -19,13 +19,8 @@ jobs:
           distribution: temurin
           java-version: 17
           cache: maven
-          server-id: central
-          gpg-private-key: ${{secrets.GPG_PRIVATE_KEY}}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
-      - name: Package & Sign
-        env:
-          MAVEN_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
-        run: mvn clean verify
+      - name: Package
+        run: mvn clean package
       - name: Get Final Artifact Names
         id: get-final-name
         run: |
