@@ -7,34 +7,30 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
 
-    <fileSets>
-        <!-- Include the compiled classes directory -->
-        <fileSet>
-            <directory>${project.build.outputDirectory}</directory>
+    <dependencySets>
+        <dependencySet>
             <outputDirectory>/classes</outputDirectory>
-            <includes>
-                <include>**/*</include>
-            </includes>
-            <excludes>
-                <exclude>*.conf</exclude>
-            </excludes>
-        </fileSet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <excludes>
+                    <exclude>META-INF/**</exclude>
+                    <exclude>module-info.class</exclude>
+                    <exclude>**/*.SF</exclude>
+                    <exclude>**/*.DSA</exclude>
+                    <exclude>**/*.RSA</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+    </dependencySets>
 
-        <!-- include plugin.xml -->
+    <fileSets>
         <fileSet>
-            <directory>${project.build.outputDirectory}</directory>
+            <directory>${project.build.directory}/filtered-resources</directory>
+            <outputDirectory>/</outputDirectory>
             <includes>
                 <include>plugin.xml</include>
-            </includes>
-            <outputDirectory>/</outputDirectory>
-        </fileSet>
-
-        <!-- Dependency JARs -->
-        <fileSet>
-            <directory>${project.build.directory}/libs</directory>
-            <outputDirectory>/libs</outputDirectory>
-            <includes>
-                <include>**/*</include>
+                <include>copying.txt</include>
             </includes>
         </fileSet>
     </fileSets>

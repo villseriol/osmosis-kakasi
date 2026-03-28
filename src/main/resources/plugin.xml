@@ -4,9 +4,11 @@
     <requires>
         <import plugin-id="org.openstreetmap.osmosis.core.plugin.Core" reverse-lookup="false" />
     </requires>
+
     <runtime>
-        <library id="core" path="classes/" type="code" version="${project.version}" />
-        <library id="dependencies" path="libs/" type="code" />
+        <library id="core" path="/classes" type="code" version="${project.version}">
+            <export prefix="*" />
+        </library>
     </runtime>
 
     <extension plugin-id="org.openstreetmap.osmosis.core.plugin.Core"
