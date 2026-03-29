@@ -41,6 +41,17 @@ TBD
 
 ## Usage
 
+## Compliance
+
+To the best of my knowledge, this project is in compliance with the the following licensing
+restrictions,
+
+| Entity                                 | Reviewed On | Use                          | Notes                                                                |
+| -------------------------------------- | ----------- | ---------------------------- | -------------------------------------------------------------------- |
+| org.apache.commons:commons-text:1.15.0 | 29/04/2026  | Embedded (Plugin)            | ✅ Apache-2.0 licence is one-way compatible with GPL 3.0             |
+| com.ibm.icu:icu4j:78.3                 | 29/04/2026  | Embedded (Plugin)            | ✅ Unicode V3 license is compatible with GPL 3.0                     |
+| https://github.com/skk-dev/dict.git    | 29/04/2026  | Resources (Dictionary Files) | ✅ Dictionaries use GPL 2.0 license which is compatible with GPL 3.0 |
+
 ## Disclaimer
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU
