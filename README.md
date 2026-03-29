@@ -46,12 +46,12 @@ TBD
 To the best of my knowledge, this project is in compliance with the the following licensing
 restrictions,
 
-| Entity                                 | Reviewed On | Use                      | Notes                                                             |
-| -------------------------------------- | ----------- | ------------------------ | ----------------------------------------------------------------- |
-| org.apache.commons:commons-text:1.15.0 | 29/04/2026  | Embedded (Plugin)        | Apache-2.0 licence is one-way compatible with GPL 3.0             |
-| com.ibm.icu:icu4j:78.3                 | 29/04/2026  | Embedded (Plugin)        | Unicode V3 license is compatible with GPL 3.0                     |
-| io.github.villseriol:kakasi2:2.0.1     | 29/04/2026  | Embedded (Plugin)        | GPL 3.0 license                                                   |
-| skk-dev/dict                           | 29/04/2026  | Resources (Dictionaries) | Dictionaries use GPL 2.0 license which is compatible with GPL 3.0 |
+| Entity                                 | Reviewed On | Use                      | Notes                                                 |
+| -------------------------------------- | ----------- | ------------------------ | ----------------------------------------------------- |
+| org.apache.commons:commons-text:1.15.0 | 29/04/2026  | Embedded (Plugin)        | Apache-2.0 licence is one-way compatible with GPL 3.0 |
+| com.ibm.icu:icu4j:78.3                 | 29/04/2026  | Embedded (Plugin)        | Unicode V3 license is compatible with GPL 3.0         |
+| io.github.villseriol:kakasi2:2.0.1     | 29/04/2026  | Embedded (Plugin)        | GPL 3.0 license                                       |
+| skk-dev/dict                           | 29/04/2026  | Resources (Dictionaries) | GPL 2.0 license is compatible with GPL 3.0            |
 
 ## Disclaimer
 
