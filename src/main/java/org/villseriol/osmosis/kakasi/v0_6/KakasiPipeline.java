@@ -1,6 +1,9 @@
 // This software is released into the Public Domain.  See copying.txt for details.
 package org.villseriol.osmosis.kakasi.v0_6;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -10,7 +13,9 @@ import org.openstreetmap.osmosis.core.OsmosisRuntimeException;
 import org.villseriol.kakasi.api.Kakasi;
 import org.villseriol.kakasi.api.KakasiConfig;
 import org.villseriol.kakasi.api.KakasiConstants;
-import org.villseriol.osmosis.kakasi.v0_6.configuration.UserConfiguration;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.DictionaryLoader;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.model.DictionaryEntry;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.model.UserConfiguration;
 import org.villseriol.osmosis.kakasi.v0_6.transform.HalfToFullTransform;
 import org.villseriol.osmosis.kakasi.v0_6.transform.KakasiTransform;
 import org.villseriol.osmosis.kakasi.v0_6.transform.LigatureTransform;
@@ -82,7 +87,8 @@ public final class KakasiPipeline {
     public void init(UserConfiguration configuration) {
         KakasiConfig config = new KakasiConfig(KakasiConstants.ASCII_CONFIG);
 
-        List<String> dictionaries = configuration.getDictionaries().stream().map((p) -> p.toString()).toList();
+        List<String> dictionaries = configuration.getDictionaryEntries().stream().map(this::resolveDictionaryPath)
+                .map(Path::toString).toList();
         if (!dictionaries.isEmpty()) {
             LOG.fine("Loaded " + dictionaries.size() + " dictionaries");
             config.setDictionaries(dictionaries);
@@ -95,6 +101,34 @@ public final class KakasiPipeline {
         Map<CharSequence, CharSequence> replacements = configuration.getReplacements().stream()
                 .collect(Collectors.toMap((r) -> r.getFrom(), (r) -> r.getTo()));
         this.pre.setProxy(new ReplacementTransform(replacements));
+    }
+
+
+    private Path resolveDictionaryPath(DictionaryEntry entry) {
+        String path = entry.getPath();
+        String alias = entry.getAlias();
+        boolean isPathEmpty = path == null || "".equals(path);
+        boolean isAliasEmpty = alias == null || "".equals(alias);
+
+        if (isAliasEmpty && isPathEmpty) {
+            throw new OsmosisRuntimeException("Both 'path' and 'name' can not be specified for dictionary");
+        }
+
+        if (!isAliasEmpty) {
+            try {
+                return DictionaryLoader.load(alias);
+            } catch (IOException e) {
+                throw new OsmosisRuntimeException("Failed to load dictionary from alias", e);
+            }
+        } else {
+            Path result = Path.of(path);
+            if (Files.exists(result)) {
+                return result;
+            } else {
+                String error = String.format("Dictionary does not exist %s", path);
+                throw new OsmosisRuntimeException(error);
+            }
+        }
     }
 
 

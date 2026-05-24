@@ -4,8 +4,10 @@ package org.villseriol.osmosis.kakasi.v0_6;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.openstreetmap.osmosis.core.container.v0_6.EntityContainer;
 import org.openstreetmap.osmosis.core.domain.v0_6.Entity;
@@ -13,8 +15,8 @@ import org.openstreetmap.osmosis.core.domain.v0_6.EntityType;
 import org.openstreetmap.osmosis.core.domain.v0_6.Tag;
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 import org.openstreetmap.osmosis.core.task.v0_6.SinkSource;
-import org.villseriol.osmosis.kakasi.v0_6.configuration.UserConfiguration;
 import org.villseriol.osmosis.kakasi.v0_6.configuration.UserConfigurationLoader;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.model.UserConfiguration;
 
 
 public class KakasiTask implements SinkSource {
@@ -24,6 +26,7 @@ public class KakasiTask implements SinkSource {
 
     private Sink sink;
     private UserConfiguration configuration = new UserConfiguration();
+    private Set<String> tagMatches = new HashSet<>();
 
     public KakasiTask(final String configFile) {
         LOG.log(Level.FINE, "Kakasi configured with " + configFile);
@@ -45,7 +48,7 @@ public class KakasiTask implements SinkSource {
 
         for (Tag tag : entityTags) {
             String key = tag.getKey();
-            boolean isMatch = configuration.getTagMatchs().stream().anyMatch((t) -> t.isMatch(key));
+            boolean isMatch = tagMatches.contains(key);
             if (isMatch) {
                 String original = tag.getValue();
                 String value = pipeline.run(original);
@@ -72,6 +75,8 @@ public class KakasiTask implements SinkSource {
         sink.initialize(metaData);
 
         pipeline.init(configuration);
+
+        this.tagMatches = configuration.getTagEntries().stream().map((e) -> e.getKey()).collect(Collectors.toSet());
     }
 
 

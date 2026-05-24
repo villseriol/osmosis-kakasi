@@ -8,12 +8,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.Test;
 import org.openstreetmap.osmosis.core.OsmosisRuntimeException;
 import org.openstreetmap.osmosis.testutil.AbstractDataTest;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.model.DictionaryEntry;
+import org.villseriol.osmosis.kakasi.v0_6.configuration.model.UserConfiguration;
 
 
 public class UserConfigurationLoaderTest extends AbstractDataTest {
@@ -24,7 +25,7 @@ public class UserConfigurationLoaderTest extends AbstractDataTest {
         File sourceFile = dataUtils.createDataFile("v0_6/empty-user-config.xml");
         UserConfiguration config = loader.load(sourceFile);
         assertNotNull(config);
-        List<Path> dictionaries = config.getDictionaries();
+        List<DictionaryEntry> dictionaries = config.getDictionaryEntries();
         assertNotNull(dictionaries);
         assertTrue(dictionaries.isEmpty());
 
