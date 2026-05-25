@@ -13,6 +13,7 @@ import org.villseriol.osmosis.kakasi.v0_6.configuration.TagMatch;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 
 @JsonRootName(value = "configuration")
@@ -26,8 +27,47 @@ public final class UserConfiguration {
     @JacksonXmlElementWrapper(localName = "tag-list")
     private List<TagEntry> tagEntries = new ArrayList<>();
 
+    @JacksonXmlProperty(isAttribute = true, localName = "exclude-relations")
+    private boolean excludeRelations;
+
+    @JacksonXmlProperty(isAttribute = true, localName = "exclude-ways")
+    private boolean excludeWays;
+
+    @JacksonXmlProperty(isAttribute = true, localName = "exclude-nodes")
+    private boolean excludeNodes;
+
     public UserConfiguration() {
         super();
+    }
+
+
+    public void setExcludeNodes(boolean excludeNodes) {
+        this.excludeNodes = excludeNodes;
+    }
+
+
+    public boolean isExcludeNodes() {
+        return excludeNodes;
+    }
+
+
+    public void setExcludeRelations(boolean excludeRelations) {
+        this.excludeRelations = excludeRelations;
+    }
+
+
+    public boolean isExcludeRelations() {
+        return excludeRelations;
+    }
+
+
+    public void setExcludeWays(boolean excludeWays) {
+        this.excludeWays = excludeWays;
+    }
+
+
+    public boolean isExcludeWays() {
+        return excludeWays;
     }
 
 

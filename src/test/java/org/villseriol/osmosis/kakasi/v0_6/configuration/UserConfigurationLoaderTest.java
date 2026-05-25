@@ -40,6 +40,18 @@ public class UserConfigurationLoaderTest extends AbstractDataTest {
 
 
     @Test
+    public void testEntityExclusionConfiguration() {
+        File sourceFile = dataUtils.createDataFile("v0_6/exclusion-user-config.xml");
+        UserConfiguration config = loader.load(sourceFile);
+        assertNotNull(config);
+
+        assertTrue(config.isExcludeWays());
+        assertTrue(config.isExcludeRelations());
+        assertFalse(config.isExcludeNodes());
+    }
+
+
+    @Test
     public void testMalformedConfiguration() {
         File sourceFile = dataUtils.createDataFile("v0_6/malformed-user-config.xml");
         try {

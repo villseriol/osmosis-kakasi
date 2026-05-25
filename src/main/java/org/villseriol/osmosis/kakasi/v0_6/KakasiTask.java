@@ -41,6 +41,15 @@ public class KakasiTask implements SinkSource {
         Collection<Tag> entityTags = entity.getTags();
         EntityType entityType = entity.getType();
 
+        boolean skip = (configuration.isExcludeNodes() && EntityType.Node == entityType)
+                || (configuration.isExcludeRelations() && EntityType.Relation == entityType)
+                || (configuration.isExcludeWays() && EntityType.Way == entityType);
+
+        if (skip) {
+            sink.process(writeableEntityContainer);
+            return;
+        }
+
         Collection<Tag> removed = new HashSet<>();
         Collection<Tag> updated = new HashSet<>();
 
