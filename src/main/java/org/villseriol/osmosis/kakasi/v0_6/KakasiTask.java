@@ -36,7 +36,6 @@ public class KakasiTask implements SinkSource {
 
     @Override
     public void process(EntityContainer entityContainer) {
-        EntityContainer writeableEntityContainer = entityContainer.getWriteableInstance();
         Entity entity = entityContainer.getEntity();
         Collection<Tag> entityTags = entity.getTags();
         EntityType entityType = entity.getType();
@@ -46,34 +45,51 @@ public class KakasiTask implements SinkSource {
                 || (configuration.isExcludeWays() && EntityType.Way == entityType);
 
         if (skip) {
-            sink.process(writeableEntityContainer);
+            sink.process(entityContainer);
             return;
         }
 
-        Collection<Tag> removed = new HashSet<>();
-        Collection<Tag> updated = new HashSet<>();
+        Collection<Tag> matching = entityTags.stream().filter((t) -> tagMatches.contains(t.getKey()))
+                .collect(Collectors.toList());
+        if (matching.isEmpty()) {
+            sink.process(entityContainer);
+            return;
+        }
 
-        LOG.log(Level.FINER, String.format("Starting translation for %s", entity.getId()));
+        process(entityContainer, matching);
+    }
+
+
+    /**
+     * An inner process method that applies the transformations to the entity
+     * container.
+     *
+     * @param entityContainer the entity container
+     * @param entityTags the list of filtered tags
+     *
+     * @implNote The propagated entity container is a proxy to the actual entity
+     *           container.
+     */
+    private void process(EntityContainer entityContainer, Collection<Tag> entityTags) {
+        EntityContainer writeableEntityContainer = entityContainer.getWriteableInstance();
+        Entity writableEntity = writeableEntityContainer.getEntity();
+        Collection<Tag> writableEntityTags = writableEntity.getTags();
+
+        Collection<Tag> tagsToRemove = new HashSet<>();
+        Collection<Tag> tagsToUpdate = new HashSet<>();
 
         for (Tag tag : entityTags) {
             String key = tag.getKey();
-            boolean isMatch = tagMatches.contains(key);
-            if (isMatch) {
-                String original = tag.getValue();
-                String value = pipeline.run(original);
-                Tag next = new Tag(key, value);
+            String original = tag.getValue();
+            String value = pipeline.run(original);
+            Tag next = new Tag(key, value);
 
-                LOG.log(Level.FINER, String.format("%s: (%s, %s)", key, original, value));
-
-                removed.add(tag);
-                updated.add(next);
-            }
+            tagsToRemove.add(tag);
+            tagsToUpdate.add(next);
         }
 
-        LOG.log(Level.FINER, "Completed translation");
-
-        entityTags.removeAll(removed);
-        entityTags.addAll(updated);
+        writableEntityTags.removeAll(tagsToRemove);
+        writableEntityTags.addAll(tagsToUpdate);
 
         sink.process(writeableEntityContainer);
     }
