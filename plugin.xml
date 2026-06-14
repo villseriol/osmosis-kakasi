@@ -2,7 +2,8 @@
 <!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
 <plugin id="KakasiPlugin" version="${project.version}">
     <requires>
-        <import plugin-id="org.openstreetmap.osmosis.core.plugin.Core" reverse-lookup="false" />
+        <import plugin-id="org.openstreetmap.osmosis.core.plugin.Core" reverse-lookup="false"
+            plugin-version="${osmosis.version}" />
     </requires>
 
     <runtime>
