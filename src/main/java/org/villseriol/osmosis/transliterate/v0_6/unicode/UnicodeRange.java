@@ -1368,9 +1368,4 @@ public enum UnicodeRange {
 
         throw new IllegalArgumentException("No unicode range for code point: " + codePoint);
     }
-
-
-    public static UnicodeRange fromCharacter(Character character) {
-        return fromCodePoint(character);
-    }
 }

@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 
@@ -19,6 +21,10 @@ import tools.jackson.dataformat.yaml.YAMLWriteFeature;
 
 
 public class CharacterMappingReportYaml {
+    private static final Logger LOG = Logger.getLogger(CharacterMappingReportYaml.class.getName());
+
+    private static final String ID_FORMAT = "U+%04X";
+
     private static final String ID_KEY = "id";
     private static final String FROM_KEY = "from";
     private static final String TO_KEY = "to";
@@ -41,11 +47,10 @@ public class CharacterMappingReportYaml {
 
 
     private ObjectMapper setup() {
-        // Glyphs are quoted unconditionally (no MINIMIZE_QUOTES): unquoted "1" would load
+        // Glyphs are quoted unconditionally (no MINIMIZE_QUOTES): unquoted "1"
+        // would load
         // as a number, "y" as a boolean, and "=" is a reserved YAML 1.1 tag.
-        return YAMLMapper.builder()
-                .disable(YAMLWriteFeature.WRITE_DOC_START_MARKER)
-                .build();
+        return YAMLMapper.builder().disable(YAMLWriteFeature.WRITE_DOC_START_MARKER).build();
     }
 
 
@@ -60,6 +65,15 @@ public class CharacterMappingReportYaml {
             List<Map<String, String>> mappings = new ArrayList<>();
 
             for (CharacterMappingRecord record : entry.getValue()) {
+                try {
+                    UnicodeRange.fromCodePoint(record.getFrom());
+                } catch (IllegalArgumentException exception) {
+                    LOG.log(Level.WARNING, exception, () -> "Skipping code point outside of any unicode range: "
+                            + String.format(ID_FORMAT, record.getFrom()));
+
+                    continue;
+                }
+
                 Map<String, String> mapping = new LinkedHashMap<>();
                 mapping.put(ID_KEY, record.getFromCodePoints());
                 mapping.put(FROM_KEY, new String(Character.toChars(record.getFrom())));
