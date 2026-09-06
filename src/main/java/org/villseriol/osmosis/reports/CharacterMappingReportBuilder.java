@@ -1,6 +1,8 @@
 // This software is released into the Public Domain.  See copying.txt for details.
 package org.villseriol.osmosis.reports;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,8 +12,8 @@ import org.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.Unimap;
 
 
-public class TlConfigCharacterMapReportBuilder {
-    private final Map<UnicodeRange, Collection<TlConfigCharacterMapRecord>> data = new HashMap<>();
+public class CharacterMappingReportBuilder {
+    private final Map<UnicodeRange, Collection<CharacterMappingRecord>> model = new HashMap<>();
 
     public void process(Unimap unimap) {
         for (UnicodeRange range : UnicodeRange.values()) {
@@ -26,19 +28,19 @@ public class TlConfigCharacterMapReportBuilder {
                 String from = new String(Character.toChars(codePoint));
                 String output = unimap.action(from);
 
-                data.computeIfAbsent(range, key -> new ArrayList<>())
-                        .add(new TlConfigCharacterMapRecord(codePoint, output));
+                model.computeIfAbsent(range, key -> new ArrayList<>())
+                        .add(new CharacterMappingRecord(codePoint, output));
             }
         }
     }
 
 
-    public Map<UnicodeRange, Collection<TlConfigCharacterMapRecord>> getData() {
-        return data;
+    public Map<UnicodeRange, Collection<CharacterMappingRecord>> getModel() {
+        return model;
     }
 
 
-    public TlConfigCharacterMapReport build() {
-        return new TlConfigCharacterMapReport(data);
+    public void generate(Path path) throws IOException {
+        new CharacterMappingReportYaml(model).generate(path);
     }
 }

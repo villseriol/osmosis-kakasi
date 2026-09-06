@@ -12,7 +12,7 @@ import org.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.Unimap;
 
 
-public class TlConfigCharacterMapReportBuilderTest {
+public class CharacterMappingReportBuilderTest {
     private static final Unimap SINGLE_CHARACTER_REMAP = new Unimap() {
         @Override
         public String action(String input) {
@@ -31,10 +31,10 @@ public class TlConfigCharacterMapReportBuilderTest {
 
     @Test
     public void testProcessGroupsEveryRangeCharacterByUnicodeRange() {
-        TlConfigCharacterMapReportBuilder builder = new TlConfigCharacterMapReportBuilder();
+        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
         builder.process(SINGLE_CHARACTER_REMAP);
 
-        Map<UnicodeRange, Collection<TlConfigCharacterMapRecord>> data = builder.getData();
+        Map<UnicodeRange, Collection<CharacterMappingRecord>> data = builder.getModel();
 
         assertTrue(data.containsKey(UnicodeRange.BASIC_LATIN));
         int basicLatinSize = UnicodeRange.BASIC_LATIN.getUpper() - UnicodeRange.BASIC_LATIN.getLower() + 1;
@@ -44,10 +44,10 @@ public class TlConfigCharacterMapReportBuilderTest {
 
     @Test
     public void testProcessRecordsFromAndToForRemappedCharacter() {
-        TlConfigCharacterMapReportBuilder builder = new TlConfigCharacterMapReportBuilder();
+        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
         builder.process(SINGLE_CHARACTER_REMAP);
 
-        TlConfigCharacterMapRecord record = findRecordFor(builder, 'a');
+        CharacterMappingRecord record = findRecordFor(builder, 'a');
 
         assertEquals(Integer.valueOf('a'), record.getFrom());
         assertEquals("b", record.getTo());
@@ -56,18 +56,18 @@ public class TlConfigCharacterMapReportBuilderTest {
 
     @Test
     public void testProcessRecordsFromAndToForUnchangedCharacter() {
-        TlConfigCharacterMapReportBuilder builder = new TlConfigCharacterMapReportBuilder();
+        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
         builder.process(SINGLE_CHARACTER_REMAP);
 
-        TlConfigCharacterMapRecord record = findRecordFor(builder, 'c');
+        CharacterMappingRecord record = findRecordFor(builder, 'c');
 
         assertEquals(Integer.valueOf('c'), record.getFrom());
         assertEquals("c", record.getTo());
     }
 
 
-    private TlConfigCharacterMapRecord findRecordFor(TlConfigCharacterMapReportBuilder builder, char from) {
-        return builder.getData().get(UnicodeRange.BASIC_LATIN).stream().filter(record -> record.getFrom() == from)
+    private CharacterMappingRecord findRecordFor(CharacterMappingReportBuilder builder, char from) {
+        return builder.getModel().get(UnicodeRange.BASIC_LATIN).stream().filter(record -> record.getFrom() == from)
                 .findFirst().orElseThrow();
     }
 }

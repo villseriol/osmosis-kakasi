@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 
 
-public class TlConfigCharacterMapRecord implements Comparator<TlConfigCharacterMapRecord> {
+public class CharacterMappingRecord implements Comparator<CharacterMappingRecord> {
     private Integer from;
     private CharSequence to;
 
-    public TlConfigCharacterMapRecord(Integer from, CharSequence to) {
+    public CharacterMappingRecord(Integer from, CharSequence to) {
         this.from = from;
         this.to = to;
     }
@@ -77,7 +77,7 @@ public class TlConfigCharacterMapRecord implements Comparator<TlConfigCharacterM
 
 
     @Override
-    public int compare(TlConfigCharacterMapRecord a, TlConfigCharacterMapRecord b) {
+    public int compare(CharacterMappingRecord a, CharacterMappingRecord b) {
         return a.getFrom().compareTo(b.getFrom());
     }
 }

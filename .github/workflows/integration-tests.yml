@@ -19,14 +19,14 @@ jobs:
       - name: Package
         run: mvn clean package
 
-      - name: Generate TL Config Character Map Report
-        run: mvn exec:java@generate-tl-config-character-map-report
+      - name: Generate Character Mapping Report
+        run: mvn exec:java@generate-character-mapping-report
 
-      - name: Upload TL Config Character Map Report
+      - name: Upload Character Mapping Report
         uses: actions/upload-artifact@v4
         with:
-          name: tl-config-character-map-report
-          path: target/reports/tl-config-character-map-report.xlsx
+          name: character-mapping-report
+          path: target/reports/character-mapping-report.yaml
           retention-days: 7
 
       - name: Get Final Artifact Name
