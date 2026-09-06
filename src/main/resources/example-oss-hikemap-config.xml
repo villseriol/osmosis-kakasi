@@ -118,6 +118,7 @@
         <run alias="cjk-compatibility" />
         <run alias="thai" />
         <run alias="all-phonetic-extensions" />
+        <run alias="spacing-modifier-letters" />
 
         <!-- standard-name-config.xml -->
         <run alias="kakasi">
