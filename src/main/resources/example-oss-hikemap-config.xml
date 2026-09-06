@@ -115,6 +115,9 @@
 
         <run alias="radicals" />
         <run alias="enclosed" />
+        <run alias="cjk-compatibility" />
+        <run alias="thai" />
+        <run alias="all-phonetic-extensions" />
 
         <!-- standard-name-config.xml -->
         <run alias="kakasi">
