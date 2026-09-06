@@ -249,7 +249,7 @@
               <mainClass>
                 org.villseriol.osmosis.reports.CharacterMappingReportGenerator</mainClass>
               <arguments>
-                <argument>src/test/resources/data/template/v0_6/pre-processing-config.xml</argument>
+                <argument>src/main/resources/example-oss-hikemap-config.xml</argument>
                 <argument>${project.build.directory}/reports/character-mapping-report.yaml</argument>
               </arguments>
             </configuration>
