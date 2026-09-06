@@ -28,8 +28,10 @@ public class CharacterMappingReportBuilder {
                 String from = new String(Character.toChars(codePoint));
                 String output = unimap.action(from);
 
-                model.computeIfAbsent(range, key -> new ArrayList<>())
-                        .add(new CharacterMappingRecord(codePoint, output));
+                if (Character.isDefined(codePoint)) {
+                    model.computeIfAbsent(range, key -> new ArrayList<>())
+                            .add(new CharacterMappingRecord(codePoint, output));
+                }
             }
         }
     }
