@@ -13,8 +13,9 @@
             <useProjectArtifact>true</useProjectArtifact>
             <unpack>true</unpack>
             <excludes>
-                <exclude>org.apache.poi:poi</exclude>
-                <exclude>org.apache.poi:poi-ooxml</exclude>
+                <exclude>tools.jackson.dataformat:jackson-dataformat-yaml</exclude>
+                <!-- Transitive dependency of jackson-dataformat-yaml -->
+                <exclude>org.snakeyaml:snakeyaml-engine</exclude>
             </excludes>
             <unpackOptions>
                 <excludes>
@@ -23,7 +24,7 @@
                     <exclude>**/*.SF</exclude>
                     <exclude>**/*.DSA</exclude>
                     <exclude>**/*.RSA</exclude>
-                    <exclude>org/villseriol/osmosis/analysis/**</exclude>
+                    <exclude>org/villseriol/osmosis/reports/**</exclude>
                 </excludes>
             </unpackOptions>
         </dependencySet>

@@ -29,6 +29,7 @@ import org.villseriol.osmosis.transliterate.v0_6.unicode.decorator.ConditionalDe
 import org.villseriol.osmosis.transliterate.v0_6.unicode.decorator.SequenceDecorator;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.ArrowsMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.BoxDrawingMapper;
+import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.CjkCompatibilityMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.CjkRadicalsSupplementMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.CyrillicMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.EnclosedAlphanumericSupplementMapper;
@@ -42,6 +43,7 @@ import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.Ka
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.KatakanaPhoneticExtensionsMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.LatinMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.MiscellaneousSymbolsAndArrowsMapper;
+import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.PhoneticExtensionsMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.SpacingModifierLettersMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.ThaiMapper;
 import org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.nonspecific.CustomMappingTransform;
@@ -75,6 +77,10 @@ public class TransliteratePipelineBuilder {
         NormalizeAlias alias = run.getAlias();
 
         switch (alias) {
+        case ALL_PHONETIC_EXTENSIONS:
+            LOG.info("Initializing all-phonetic-extensions transform");
+            return new SequenceDecorator(new PhoneticExtensionsMapper(), new KatakanaPhoneticExtensionsMapper());
+
         case ALL_TO_BLANK:
             LOG.info("Initializing all-to-blank transform");
             return new RangeToBlankTransform(run.getUnicodeGroup());
@@ -90,6 +96,10 @@ public class TransliteratePipelineBuilder {
         case BOX_DRAWING:
             LOG.info("Initializing box-drawing transform");
             return new BoxDrawingMapper();
+
+        case CJK_COMPATIBILITY:
+            LOG.info("Initializing cjk-compatibility transform");
+            return new CjkCompatibilityMapper();
 
         case CYRILLIC:
             LOG.info("Initializing cyrillic transform");

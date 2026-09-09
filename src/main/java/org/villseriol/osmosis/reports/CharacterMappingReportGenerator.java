@@ -11,16 +11,16 @@ import org.villseriol.osmosis.transliterate.v0_6.config.model.NormalizeConfigura
 import org.villseriol.osmosis.transliterate.v0_6.unicode.Unimap;
 
 
-public final class TlConfigCharacterMapReportGenerator {
+public final class CharacterMappingReportGenerator {
 
-    private TlConfigCharacterMapReportGenerator() {
+    private CharacterMappingReportGenerator() {
         super();
     }
 
 
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
-            throw new IllegalArgumentException("Usage: TlConfigCharacterMapReportGenerator <configFile> <outputFile>");
+            throw new IllegalArgumentException("Usage: CharacterMappingReportGenerator <configFile> <outputFile>");
         }
 
         Path configFile = Path.of(args[0]);
@@ -30,10 +30,8 @@ public final class TlConfigCharacterMapReportGenerator {
         NormalizeConfiguration configuration = loader.load(configFile.toString());
         Unimap unimap = new TransliteratePipelineBuilder(configuration).build();
 
-        TlConfigCharacterMapReportBuilder builder = new TlConfigCharacterMapReportBuilder();
+        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
         builder.process(unimap);
-
-        TlConfigCharacterMapReport report = builder.build();
 
         Path outputDir = outputFile.toAbsolutePath().getParent();
         if (outputDir != null) {
@@ -42,6 +40,6 @@ public final class TlConfigCharacterMapReportGenerator {
 
         Files.deleteIfExists(outputFile);
 
-        report.generate(outputFile);
+        builder.generate(outputFile);
     }
 }

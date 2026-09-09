@@ -11,6 +11,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum NormalizeAlias {
     /**
      * TODO.
+     *
+     * @see org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.PhoneticExtensionsMapper
+     * @see org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.KatakanaPhoneticExtensionsMapper
+     */
+    ALL_PHONETIC_EXTENSIONS("all-phonetic-extensions"),
+
+    /**
+     * TODO.
      */
     ALL_TO_BLANK("all-to-blank"),
 
@@ -33,6 +41,13 @@ public enum NormalizeAlias {
      * @see org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.BoxDrawingMapper
      */
     BOX_DRAWING("box-drawing"),
+
+    /**
+     * TODO.
+     *
+     * @see org.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.CjkCompatibilityMapper
+     */
+    CJK_COMPATIBILITY("cjk-compatibility"),
 
     /**
      * TODO.

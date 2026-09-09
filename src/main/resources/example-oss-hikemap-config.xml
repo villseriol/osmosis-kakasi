@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <pipeline>
+        <!-- pre-processing-config.xml -->
+        <!-- Ensure our overrides take priority -->
+        <run alias="custom">
+            <mapping>
+                <replace-with value="No.">
+                    <when-value-is value="№" />
+                </replace-with>
+
+                <replace-with value=" ">
+                    <when-value-is value=" " />
+                </replace-with>
+
+                <replace-with value="">
+                    <when-value-is value="" />
+                    <when-value-is value="" />
+                </replace-with>
+
+
+                <replace-with value="[">
+                    <when-value-is value="【" />
+                </replace-with>
+
+                <replace-with value="]">
+                    <when-value-is value="】" />
+                </replace-with>
+
+                <replace-with value="¤">
+                    <when-value-is value="฿" /> <!-- 20A0 THAI CURRENCY SYMBOL BAHT -->
+                    <when-value-is value="₠" /> <!-- 20A0 EURO-CURRENCY SIGN -->
+                    <when-value-is value="₡" /> <!-- 20A1 COLON SIGN -->
+                    <when-value-is value="₢" /> <!-- 20A2 CRUZEIRO SIGN -->
+                    <when-value-is value="₣" /> <!-- 20A3 FRENCH FRANC SIGN -->
+                    <when-value-is value="₤" /> <!-- 20A4 LIRA SIGN -->
+                    <when-value-is value="₥" /> <!-- 20A5 MILL SIGN -->
+                    <when-value-is value="₦" /> <!-- 20A6 NAIRA SIGN -->
+                    <when-value-is value="₧" /> <!-- 20A7 PESETA SIGN -->
+                    <when-value-is value="₨" /> <!-- 20A8 RUPEE SIGN -->
+                    <when-value-is value="₩" /> <!-- 20A9 WON SIGN -->
+                    <when-value-is value="₪" /> <!-- 20AA NEW SHEQEL SIGN -->
+                    <when-value-is value="₫" /> <!-- 20AB DONG SIGN -->
+                    <when-value-is value="₭" /> <!-- 20AD KIP SIGN -->
+                    <when-value-is value="₮" /> <!-- 20AE TUGRIK SIGN -->
+                    <when-value-is value="₯" /> <!-- 20AF DRACHMA SIGN -->
+                    <when-value-is value="₰" /> <!-- 20B0 GERMAN PENNY SIGN -->
+                    <when-value-is value="₱" /> <!-- 20B1 PESO SIGN -->
+                    <when-value-is value="₲" /> <!-- 20B2 GUARANI SIGN -->
+                    <when-value-is value="₳" /> <!-- 20B3 AUSTRAL SIGN -->
+                    <when-value-is value="₴" /> <!-- 20B4 HRYVNIA SIGN -->
+                    <when-value-is value="₵" /> <!-- 20B5 CEDI SIGN -->
+                    <when-value-is value="₶" /> <!-- 20B6 LIVRE TOURNOIS SIGN -->
+                    <when-value-is value="₷" /> <!-- 20B7 SPESMILO SIGN -->
+                    <when-value-is value="₸" /> <!-- 20B8 TENGE SIGN -->
+                    <when-value-is value="₹" /> <!-- 20B9 INDIAN RUPEE SIGN -->
+                    <when-value-is value="€" /> <!-- 20AC EURO SIGN -->
+                </replace-with>
+
+                <replace-with value="·">
+                    <when-value-is value="・" />
+                </replace-with>
+
+                <replace-with value="±">
+                    <when-value-is value="∓" />
+                </replace-with>
+
+                <replace-with value="'">
+                    <when-value-is value="ʻ" />
+                </replace-with>
+            </mapping>
+        </run>
+
+        <run alias="general-punctuation" />
+        <run alias="all-to-whitespace" unicode-group="general-punctuation" />
+
+        <run alias="arrow" />
+        <run alias="all-to-blank" unicode-group="misc-symbols-and-arrows" />
+        <run alias="box-drawing" />
+        <run alias="all-to-whitespace" unicode-group="geometric-shapes" />
+        <run alias="cyrillic" />
+
+        <run alias="greek" />
+        <run alias="all-to-whitespace" unicode-group="greek-and-coptic" />
+
+        <run alias="half-width-full-width" />
+        <run alias="all-to-whitespace" unicode-group="halfwidth-and-fullwidth-forms" />
+
+        <!-- Map latin characters, fallback to whitespace for any of the remaining characters -->
+        <run alias="latin" />
+        <run alias="all-to-whitespace" unicode-group="ipa-extensions" />
+        <run alias="all-to-whitespace" unicode-group="number-forms" />
+        <run alias="all-to-whitespace" unicode-group="phonetic-extensions" />
+        <run alias="all-to-whitespace" unicode-group="phonetic-extensions-supplement" />
+        <run alias="all-to-whitespace" unicode-group="latin-extended-additional" />
+        <run alias="all-to-whitespace" unicode-group="latin-extended-b" />
+        <run alias="all-to-whitespace" unicode-group="latin-extended-c" />
+        <run alias="all-to-whitespace" unicode-group="latin-extended-d" />
+        <run alias="all-to-whitespace" unicode-group="alphabetic-presentation-forms" />
+        <run alias="all-to-whitespace" unicode-group="letterlike-symbols" />
+        <run alias="all-to-whitespace" unicode-group="small-form-variants" />
+        <run alias="all-to-whitespace" unicode-group="mathematical-operators" />
+
+        <run alias="all-to-whitespace" unicode-group="dingbats" />
+        <run alias="all-to-whitespace" unicode-group="cjk-compatibility-forms" />
+        <run alias="all-to-whitespace" unicode-group="misc-symbols-and-pictographs" />
+        <run alias="all-to-blank" unicode-group="transport-and-map-symbols" />
+
+        <run alias="all-to-whitespace" unicode-group="private-use-area" />
+        <run alias="all-to-whitespace" unicode-group="specials" />
+        <run alias="all-to-whitespace" unicode-group="hangul-syllables" />
+        <run alias="all-to-blank" unicode-group="variation-selectors" />
+
+        <run alias="all-to-blank" unicode-group="combining-diacritical-marks" />
+
+        <run alias="radicals" />
+        <run alias="enclosed" />
+        <run alias="cjk-compatibility" />
+        <run alias="thai" />
+        <run alias="all-phonetic-extensions" />
+        <run alias="spacing-modifier-letters" />
+
+        <!-- standard-name-config.xml -->
+        <run alias="kakasi">
+            <dictionaries>
+                <dictionary alias="propernoun" />
+                <dictionary alias="fullname" />
+                <dictionary alias="jinmei" />
+                <dictionary alias="law" />
+                <dictionary alias="hukugougo" />
+                <dictionary alias="mazegaki" />
+            </dictionaries>
+        </run>
+
+        <!-- post-processing-config.xml -->
+        <run alias="latin1-only" />
+        <run alias="trim" />
+        <run alias="duplicate-space" />
+    </pipeline>
+</configuration>
