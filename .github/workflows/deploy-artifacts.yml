@@ -44,7 +44,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v8
         with:
-          name: osmosis-kakasi-artifacts
+          name: osmosis-transliterate-artifacts
           path: artifacts
       - name: Create Tag
         run: |

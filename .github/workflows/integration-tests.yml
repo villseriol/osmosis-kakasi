@@ -16,23 +16,24 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Package
-        run: mvn clean package
+      # install (not package) so the reports module can resolve the parent and plugin with -pl
+      - name: Install
+        run: mvn clean install
 
       - name: Generate Character Mapping Report
-        run: mvn exec:java@generate-character-mapping-report
+        run: mvn -pl osmosis-transliterate-reports exec:java@generate-character-mapping-report
 
       - name: Upload Character Mapping Report
         uses: actions/upload-artifact@v4
         with:
           name: character-mapping-report
-          path: target/reports/character-mapping-report.yaml
+          path: osmosis-transliterate-reports/target/reports/character-mapping-report.yaml
           retention-days: 7
 
       - name: Get Final Artifact Name
         id: get-final-name
         run: |
-          FINAL_NAME=$(mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout)
+          FINAL_NAME=$(mvn -pl osmosis-transliterate help:evaluate -Dexpression=project.build.finalName -q -DforceStdout)
 
           echo "final_name=$FINAL_NAME" >> $GITHUB_OUTPUT
 
@@ -44,7 +45,7 @@ jobs:
       - name: Install Plugin
         run: |
           mkdir -p ~/.openstreetmap/osmosis/plugins
-          cp target/${{ steps.get-final-name.outputs.final_name }}-plugin.zip \
+          cp osmosis-transliterate/target/${{ steps.get-final-name.outputs.final_name }}-plugin.zip \
             ~/.openstreetmap/osmosis/plugins
 
       - name: Verify Plugin Loads
