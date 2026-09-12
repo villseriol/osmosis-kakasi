@@ -1,5 +1,5 @@
 // This software is released into the Public Domain.  See copying.txt for details.
-package io.github.villseriol.osmosis.reports;
+package io.github.villseriol.osmosis.reports.generator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,11 +8,12 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.junit.Test;
+import io.github.villseriol.osmosis.reports.model.CharacterMappingRecord;
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.Unimap;
 
 
-public class CharacterMappingReportBuilderTest {
+public class CharacterMappingReportGeneratorTest {
     private static final Unimap SINGLE_CHARACTER_REMAP = new Unimap() {
         @Override
         public String action(String input) {
@@ -31,10 +32,8 @@ public class CharacterMappingReportBuilderTest {
 
     @Test
     public void testProcessGroupsEveryRangeCharacterByUnicodeRange() {
-        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
-        builder.process(SINGLE_CHARACTER_REMAP);
-
-        Map<UnicodeRange, Collection<CharacterMappingRecord>> data = builder.getModel();
+        Map<UnicodeRange, Collection<CharacterMappingRecord>> data = CharacterMappingReportGenerator
+                .process(SINGLE_CHARACTER_REMAP);
 
         assertTrue(data.containsKey(UnicodeRange.BASIC_LATIN));
         int basicLatinSize = UnicodeRange.BASIC_LATIN.getUpper() - UnicodeRange.BASIC_LATIN.getLower() + 1;
@@ -44,10 +43,7 @@ public class CharacterMappingReportBuilderTest {
 
     @Test
     public void testProcessRecordsFromAndToForRemappedCharacter() {
-        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
-        builder.process(SINGLE_CHARACTER_REMAP);
-
-        CharacterMappingRecord record = findRecordFor(builder, 'a');
+        CharacterMappingRecord record = findRecordFor('a');
 
         assertEquals(Integer.valueOf('a'), record.getFrom());
         assertEquals("b", record.getTo());
@@ -56,18 +52,15 @@ public class CharacterMappingReportBuilderTest {
 
     @Test
     public void testProcessRecordsFromAndToForUnchangedCharacter() {
-        CharacterMappingReportBuilder builder = new CharacterMappingReportBuilder();
-        builder.process(SINGLE_CHARACTER_REMAP);
-
-        CharacterMappingRecord record = findRecordFor(builder, 'c');
+        CharacterMappingRecord record = findRecordFor('c');
 
         assertEquals(Integer.valueOf('c'), record.getFrom());
         assertEquals("c", record.getTo());
     }
 
 
-    private CharacterMappingRecord findRecordFor(CharacterMappingReportBuilder builder, char from) {
-        return builder.getModel().get(UnicodeRange.BASIC_LATIN).stream().filter(record -> record.getFrom() == from)
-                .findFirst().orElseThrow();
+    private CharacterMappingRecord findRecordFor(char from) {
+        return CharacterMappingReportGenerator.process(SINGLE_CHARACTER_REMAP).get(UnicodeRange.BASIC_LATIN).stream()
+                .filter(record -> record.getFrom() == from).findFirst().orElseThrow();
     }
 }

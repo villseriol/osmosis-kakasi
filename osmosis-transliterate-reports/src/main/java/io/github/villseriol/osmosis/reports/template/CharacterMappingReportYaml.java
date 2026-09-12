@@ -1,5 +1,5 @@
 // This software is released into the Public Domain.  See copying.txt for details.
-package io.github.villseriol.osmosis.reports;
+package io.github.villseriol.osmosis.reports.template;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import io.github.villseriol.osmosis.reports.model.CharacterMappingRecord;
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.UnicodeRange;
 
 import tools.jackson.databind.ObjectMapper;

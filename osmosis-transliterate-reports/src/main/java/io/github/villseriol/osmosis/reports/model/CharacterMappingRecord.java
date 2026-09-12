@@ -1,5 +1,5 @@
 // This software is released into the Public Domain.  See copying.txt for details.
-package io.github.villseriol.osmosis.reports;
+package io.github.villseriol.osmosis.reports.model;
 
 import java.util.Comparator;
 import java.util.Objects;
