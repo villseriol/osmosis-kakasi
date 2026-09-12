@@ -16,19 +16,8 @@ jobs:
           java-version: '17'
           cache: maven
 
-      # install (not package) so the reports module can resolve the parent and plugin with -pl
-      - name: Install
-        run: mvn clean install
-
-      - name: Generate Character Mapping Report
-        run: mvn -pl osmosis-transliterate-reports exec:java@generate-character-mapping-report-yaml
-
-      - name: Upload Character Mapping Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: character-mapping-report
-          path: osmosis-transliterate-reports/target/reports/character-mapping-report.yaml
-          retention-days: 7
+      - name: Package
+        run: mvn clean package
 
       - name: Get Final Artifact Name
         id: get-final-name
