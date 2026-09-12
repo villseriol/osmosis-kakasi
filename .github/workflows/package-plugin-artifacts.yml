@@ -40,15 +40,18 @@ jobs:
             osmosis-transliterate/target/${{ steps.get-final-name.outputs.final_name }}.jar
             osmosis-transliterate/target/${{ steps.get-final-name.outputs.final_name }}-plugin.zip
           if-no-files-found: error
+          retention-days: 7
       - name: Upload YAML Report Artifacts
         uses: actions/upload-artifact@v6
         with:
           name: osmosis-transliterate-report-yaml
           path: osmosis-transliterate-reports/target/reports/character-mapping-report.yaml
           if-no-files-found: error
+          retention-days: 7
       - name: Upload CSV Report Artifacts
         uses: actions/upload-artifact@v6
         with:
           name: osmosis-transliterate-report-csv
           path: osmosis-transliterate-reports/target/reports/csv/
           if-no-files-found: error
+          retention-days: 7
