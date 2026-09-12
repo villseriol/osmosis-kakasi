@@ -31,7 +31,7 @@ jobs:
 
   package-artifacts:
     needs: resolve-tag
-    uses: ./.github/workflows/upload-artifacts.yml
+    uses: ./.github/workflows/package-plugin-artifacts.yml
 
   create-release:
     runs-on: ubuntu-latest
@@ -41,11 +41,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Download Artifacts
+      - name: Download Plugin Artifacts
         uses: actions/download-artifact@v8
         with:
-          name: osmosis-transliterate-artifacts
+          name: osmosis-transliterate-plugin
           path: artifacts
+      - name: Download YAML Report Artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: osmosis-transliterate-report-yaml
+          path: artifacts
+      - name: Download CSV Report Artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: osmosis-transliterate-report-csv
+          path: artifacts/csv
+      # publish the per-range CSV reports as one release asset instead of one asset per file
+      - name: Zip CSV Reports
+        run: |
+          cd artifacts/csv
+          zip -q ../character-mapping-report-csv.zip *.csv
       - name: Create Tag
         run: |
           git config user.name 'github-actions[bot]'
@@ -58,7 +73,14 @@ jobs:
           tag_name: ${{ needs.resolve-tag.outputs.tag }}
           files: |
             artifacts/*.jar
-            artifacts/*.zip
+            artifacts/*-plugin.zip
             artifacts/character-mapping-report.yaml
+            artifacts/character-mapping-report-csv.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  increment-version:
+    needs: create-release
+    uses: ./.github/workflows/increment-version.yml
+    with:
+      segment: minor
