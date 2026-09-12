@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 1.0" "http://jpf.sourceforge.net/plugin_1_0.dtd">
+<plugin id="TransliteratePlugin" version="${project.version}">
+    <requires>
+        <import plugin-id="org.openstreetmap.osmosis.core.plugin.Core" reverse-lookup="false"
+            plugin-version="${osmosis.version}" />
+    </requires>
+
+    <runtime>
+        <library id="core" path="classes/" type="code" version="${project.version}">
+            <export prefix="*" />
+        </library>
+    </runtime>
+
+    <extension plugin-id="org.openstreetmap.osmosis.core.plugin.Core"
+        point-id="Task" id="transliterate">
+        <parameter id="name" value="transliterate" />
+        <parameter id="class" value="io.github.villseriol.osmosis.transliterate.TransliteratePluginLoader" />
+    </extension>
+
+    <extension plugin-id="org.openstreetmap.osmosis.core.plugin.Core"
+        point-id="Task" id="version">
+        <parameter id="name" value="version" />
+        <parameter id="class" value="io.github.villseriol.osmosis.version.VersionPluginLoader" />
+    </extension>
+</plugin>
