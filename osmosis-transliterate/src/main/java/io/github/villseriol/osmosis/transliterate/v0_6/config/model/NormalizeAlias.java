@@ -3,6 +3,7 @@ package io.github.villseriol.osmosis.transliterate.v0_6.config.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.ArrowsMapper;
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.BoxDrawingMapper;
 import io.github.villseriol.osmosis.transliterate.v0_6.unicode.mapping.characterset.CjkCompatibilityMapper;
@@ -184,7 +185,9 @@ public enum NormalizeAlias {
     /**
      * TODO.
      *
-     * @see TrimTransform  */ M("trim");
+     * @see TrimTransform
+     */
+    TRIM("trim");
 
     private final String alias;
 
